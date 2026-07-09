@@ -18,6 +18,9 @@ async function bootstrap() {
     credentials: true,
   });
 
+  // Mismo prefijo que en src/main.ts: la API queda bajo /api
+  app.setGlobalPrefix('api');
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,

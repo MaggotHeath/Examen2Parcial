@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nido · Coworking</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== VISTA DE LOGIN / REGISTRO ===== -->
+  <div id="authView" class="auth-screen">
+    <div class="auth-card">
+      <h1 class="brand">🌿 Nido</h1>
+      <p class="auth-subtitle">Reserva espacios de coworking</p>
+
+      <div id="authError" class="alert alert-error hidden"></div>
+
+      <!-- Login -->
+      <form id="loginForm" class="auth-form">
+        <label>Correo</label>
+        <input type="email" id="loginEmail" required placeholder="tucorreo@ejemplo.com" />
+        <label>Contraseña</label>
+        <input type="password" id="loginPassword" required placeholder="••••••••" />
+        <button type="submit" class="btn btn-primary">Entrar</button>
+      </form>
+
+      <!-- Registro -->
+      <form id="registerForm" class="auth-form hidden">
+        <label>Nombre</label>
+        <input type="text" id="registerName" required placeholder="Tu nombre" />
+        <label>Correo</label>
+        <input type="email" id="registerEmail" required placeholder="tucorreo@ejemplo.com" />
+        <label>Contraseña</label>
+        <input type="password" id="registerPassword" required minlength="6" placeholder="Mínimo 6 caracteres" />
+        <button type="submit" class="btn btn-primary">Crear cuenta</button>
+      </form>
+
+      <p class="auth-toggle">
+        <span id="showRegister">¿No tienes cuenta? <a href="#">Regístrate</a></span>
+        <span id="showLogin" class="hidden">¿Ya tienes cuenta? <a href="#">Inicia sesión</a></span>
+      </p>
+    </div>
+  </div>
+
+  <!-- ===== VISTA PRINCIPAL (app) ===== -->
+  <div id="appView" class="app-view hidden">
+    <header class="navbar">
+      <div class="brand">🌿 Nido</div>
+      <nav class="tabs">
+        <button class="tab-btn active" data-tab="explorar">Explorar</button>
+        <button class="tab-btn" data-tab="reservas">Mis reservas</button>
+        <button class="tab-btn hidden" id="adminTabBtn" data-tab="admin">Admin</button>
+      </nav>
+      <div class="nav-user">
+        <span id="userName"></span>
+        <button id="logoutBtn" class="btn btn-ghost">Salir</button>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <!-- ---- TAB: Explorar ---- -->
+      <section id="tab-explorar" class="tab-panel active">
+        <div class="section-header">
+          <h2>Encuentra tu espacio ideal</h2>
+          <p id="spacesCount" class="muted"></p>
+        </div>
+
+        <div class="filters" id="filters">
+          <button class="chip active" data-type="ALL">Todos</button>
+          <button class="chip" data-type="SALA">Salas</button>
+          <button class="chip" data-type="ESCRITORIO">Escritorios</button>
+          <button class="chip" data-type="AUDITORIO">Auditorios</button>
+        </div>
+
+        <div id="spacesGrid" class="grid"></div>
+      </section>
+
+      <!-- ---- TAB: Mis reservas ---- -->
+      <section id="tab-reservas" class="tab-panel">
+        <div class="section-header">
+          <h2>Mis reservas</h2>
+          <p class="muted">Historial y próximas reservas.</p>
+        </div>
+        <div id="reservationsList" class="list"></div>
+      </section>
+
+      <!-- ---- TAB: Admin ---- -->
+      <section id="tab-admin" class="tab-panel">
+        <div class="section-header">
+          <h2>Administrar espacios</h2>
+          <p class="muted">Crea y elimina espacios disponibles para reservar.</p>
+        </div>
+
+        <form id="createSpaceForm" class="admin-form">
+          <div class="form-row">
+            <label>Nombre</label>
+            <input type="text" id="spaceName" required placeholder="Ej. Sala Ceiba" />
+          </div>
+          <div class="form-row">
+            <label>Ubicación</label>
+            <input type="text" id="spaceLocation" required placeholder="Ej. Piso 1, Ala Norte" />
+          </div>
+          <div class="form-row">
+            <label>Capacidad</label>
+            <input type="number" id="spaceCapacity" required min="1" placeholder="Ej. 4" />
+          </div>
+          <div class="form-row">
+            <label>Tipo</label>
+            <select id="spaceType">
+              <option value="SALA">Sala</option>
+              <option value="ESCRITORIO">Escritorio</option>
+              <option value="AUDITORIO">Auditorio</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label>Descripción (opcional)</label>
+            <input type="text" id="spaceDescription" placeholder="Breve descripción" />
+          </div>
+          <div id="adminError" class="alert alert-error hidden"></div>
+          <button type="submit" class="btn btn-primary">Crear espacio</button>
+        </form>
+
+        <div id="adminSpacesList" class="list admin-space-list"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ===== MODAL: Detalle de espacio + reservar ===== -->
+  <div id="spaceModal" class="modal hidden">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-card">
+      <button class="modal-close" id="closeModal">✕</button>
+      <div id="spaceDetail"></div>
+    </div>
+  </div>
+
+  <!-- Toast de notificaciones -->
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -10,6 +10,10 @@ async function bootstrap() {
     credentials: true,
   });
 
+  // Todas las rutas de la API quedan bajo /api (ej. /api/auth/login)
+  // El frontend estático (carpeta /public) se sirve en la raíz "/"
+  app.setGlobalPrefix('api');
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
